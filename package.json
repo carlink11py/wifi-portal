@@ -1,0 +1,19 @@
+{
+  "name": "wifi-portal",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npx ts-node-dev --respawn --transpile-only server.ts",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "npm run install:all && npm run build:frontend && npm run build:backend",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npx tsc",
+    "start": "node backend/dist/server.js",
+    "install:all": "cd frontend && npm install && cd ../backend && npm install"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
