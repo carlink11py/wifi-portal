@@ -92,9 +92,8 @@ const DEVICE_META: Record<DeviceType, { icon: React.ReactNode; label: string }> 
 function DeviceBadge({ device }: { device: DeviceType }) {
   const meta = DEVICE_META[device];
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 text-white/50 text-xs">
+    <span className="inline-flex items-center p-1.5 rounded-full bg-white/10 text-white/50">
       {meta.icon}
-      {meta.label}
     </span>
   );
 }
