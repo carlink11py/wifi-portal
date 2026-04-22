@@ -428,42 +428,53 @@ export default function Portal() {
   // ── PHONE layout ─────────────────────────────────────────────────────────────
   if (device === 'phone') {
     return (
-      <div className="min-h-screen flex items-end justify-center relative overflow-hidden"
+      <div className="min-h-screen flex items-center justify-center px-4 py-6 relative overflow-hidden"
         style={config?.background_url ? bgStyle : fallbackBg}>
         <div className="absolute inset-0 bg-black/60" />
         {!config?.background_url && (
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl" />
+          <>
+            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl" />
+          </>
         )}
 
-        {/* Slide-up bottom sheet */}
-        <div className="portal-card relative z-10 w-full">
-          <div className="bg-gray-950/90 backdrop-blur-2xl border-t border-white/15 rounded-t-3xl shadow-2xl overflow-hidden">
-            {/* Color handle */}
-            <div className="flex justify-center pt-3 pb-1">
-              <div className="w-10 h-1 rounded-full" style={{ background: primaryColor }} />
-            </div>
+        <div className="portal-card relative z-10 w-full max-w-sm">
+          <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden">
+            {/* Top accent bar */}
+            <div className="h-1 w-full" style={{ background: primaryColor }} />
 
-            <div className="px-6 pb-8 pt-2">
-              {/* Logo + heading inline */}
-              <div className="flex items-center gap-3 mb-5">
+            <div className="px-6 py-6">
+              {/* Badge */}
+              <div className="flex justify-end mb-3">
+                <DeviceBadge device="phone" />
+              </div>
+
+              {/* Logo centrado */}
+              <div className="flex flex-col items-center mb-5">
                 {config?.logo_url ? (
                   <img src={config.logo_url} alt={config?.business_name}
-                    className="h-10 w-auto object-contain drop-shadow-md flex-shrink-0" />
+                    className="max-h-[80px] max-w-full object-contain drop-shadow-lg mb-2" />
                 ) : (
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-2"
                     style={{ background: `${primaryColor}33` }}>
-                    <Wifi className="w-5 h-5" style={{ color: primaryColor }} />
+                    <Wifi className="w-6 h-6" style={{ color: primaryColor }} />
                   </div>
                 )}
-                <div className="flex-1 min-w-0">
-                  <h1 className="text-xl font-bold text-white leading-tight">
-                    {config?.welcome_title || 'Bienvenido'}
-                  </h1>
-                  <p className="text-white/55 text-sm truncate">
-                    {config?.welcome_subtitle || 'Conéctate gratis al WiFi'}
+                {config?.business_name && (
+                  <p className="text-white/50 text-xs font-medium tracking-widest uppercase text-center">
+                    {config.business_name}
                   </p>
-                </div>
-                <DeviceBadge device="phone" />
+                )}
+              </div>
+
+              {/* Heading centrado */}
+              <div className="text-center mb-5">
+                <h1 className="text-2xl font-bold text-white mb-1">
+                  {config?.welcome_title || 'Bienvenido'}
+                </h1>
+                <p className="text-white/60 text-sm">
+                  {config?.welcome_subtitle || 'Conéctate gratis al WiFi'}
+                </p>
               </div>
 
               {success ? (
@@ -473,7 +484,8 @@ export default function Portal() {
               )}
             </div>
           </div>
-          <p className="text-center text-white/20 text-xs py-2 bg-gray-950/90">
+
+          <p className="text-center text-white/25 text-xs mt-4">
             Powered by WiFrii
           </p>
         </div>
