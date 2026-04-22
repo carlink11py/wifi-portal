@@ -478,10 +478,10 @@ app.delete('/api/admin/leads/:id', requireAuth, async (req: Request, res: Respon
 
 // ─── Static frontend (production) ─────────────────────────────────────────────
 if (IS_PROD) {
-  const FRONTEND_DIST = path.join(BASE_DIR, '..', 'frontend', 'dist');
+  const FRONTEND_DIST = path.join(__dirname, '..', '..', 'frontend', 'dist');
   app.use(express.static(FRONTEND_DIST, { index: false }));
   app.get('*', (_req: Request, res: Response) => {
-    res.sendFile(path.join(FRONTEND_DIST, 'index.html'));
+    res.sendFile(path.join(__dirname, '..', '..', 'frontend', 'dist', 'index.html'));
   });
 }
 
