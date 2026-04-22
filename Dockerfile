@@ -2,23 +2,20 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Install frontend dependencies and build
+# Build frontend
 COPY frontend/package*.json ./frontend/
 RUN cd frontend && npm install
-
 COPY frontend/ ./frontend/
 RUN cd frontend && npm run build
 
-# Install backend dependencies and build
+# Build backend
 COPY backend/package*.json ./backend/
 RUN cd backend && npm install
-
 COPY backend/ ./backend/
-RUN cd backend && npm run build
+RUN cd backend && npx tsc
 
-# Copy root package files
-COPY package*.json ./
+# Copy frontend dist next to backend dist so paths are simple
+RUN cp -r /app/frontend/dist /app/backend/dist/public
 
 EXPOSE 3000
-
 CMD ["node", "backend/dist/server.js"]
