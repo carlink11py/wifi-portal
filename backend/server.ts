@@ -32,6 +32,10 @@ const app = express();
 // Trust first proxy (Railway / Render put a reverse proxy in front)
 app.set('trust proxy', 1);
 
+// ─── Static files (FIRST — before all middleware) ────────────────────────────
+app.use(express.static(path.join(__dirname, 'public')))
+app.use('/assets', express.static(path.join(__dirname, 'public', 'assets')))
+
 // ─── 1. Helmet (security headers) ────────────────────────────────────────────
 app.use(
   helmet({
@@ -476,9 +480,8 @@ app.delete('/api/admin/leads/:id', requireAuth, async (req: Request, res: Respon
   } catch (err) { internalError(res, err); }
 });
 
-// ─── Static frontend (production) ─────────────────────────────────────────────
+// ─── SPA catch-all (production) ───────────────────────────────────────────────
 if (IS_PROD) {
-  app.use(express.static(path.join(__dirname, 'public'), { index: false }));
   app.get('*', (_req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
   });
